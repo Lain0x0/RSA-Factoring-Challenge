@@ -1,24 +1,34 @@
-#!/bin/bash
+#!/usr/bin/env bash
+calculate_product_of_factors() {
+	if [ $# -ne 3 ]; then
+		args=("$@")
+			product=1
+			for a in "${args[@]:2}"; do
+				product=$(echo "$a * $product" | bc)
+					done
+	else
+		product=$3
+			fi
 
-if [ "$#" -ne 1 ]; then
-echo "Usage: $0 <file>"
+			num1=$2
+			num=$(echo "$1" | tr ':' '=')
+
+			if [ $(echo "$product > $num1" | bc) -eq 1 ]; then
+				temp=$num1
+					num1=$product
+					product=$temp
+					fi
+
+					echo "$num$num1*$product"
+}
+
+if [ $# -ne 1 ]; then
+echo 'Usage: factors <file>'
 exit 1
+else
+while read number; do
+factors_result=$(factor "$number")
+calculate_product_of_factors $factors_result
+done < "$1"
 fi
-
-while read -r number || [[ -n "$number" ]]; do
-divisor=1
-
-while [ $divisor -le $((number / 2)) ]; do
-	if [ $((number % divisor)) -eq 0 ]; then
-factor=$((number / divisor))
-	echo "$number=$divisor*$factor"
-	break
-	fi
-((divisor++))
-	done
-
-	if [ $divisor -gt $((number / 2)) ]; then
-	echo "$number=1*$number"
-	fi
-	done < "$1"
 

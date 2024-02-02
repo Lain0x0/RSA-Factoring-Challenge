@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+echo "Usage: $0 <file>"
+exit 1
+fi
+
+while read -r number || [[ -n "$number" ]]; do
+divisor=1
+
+while [ $divisor -le $((number / 2)) ]; do
+	if [ $((number % divisor)) -eq 0 ]; then
+factor=$((number / divisor))
+	echo "$number=$divisor*$factor"
+	break
+	fi
+((divisor++))
+	done
+
+	if [ $divisor -gt $((number / 2)) ]; then
+	echo "$number=1*$number"
+	fi
+	done < "$1"
+

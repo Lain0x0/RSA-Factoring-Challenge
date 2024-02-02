@@ -2,8 +2,8 @@
 from sys import argv
 
 with open(argv[1]) as f:
-    for line_1 in f:
-        number = int(line_1)
+    for line in f:
+        number = int(line)
         print("{:d}=".format(number), end="")
         if (number % 2 == 0):
             print("{}*2".format(number//2))

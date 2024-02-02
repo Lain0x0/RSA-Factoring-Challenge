@@ -1,18 +1,18 @@
-#!/usr/bin/python3
-from sys import argv
+# #usr/bin/python3
+import sys
 
-with open(argv[1]) as f:
-    for line in f:
+with open(argv[1]) as file_rsa:
+    for line in file_rsa:
         number = int(line)
         print("{:d}=".format(number), end="")
         if (number % 2 == 0):
             print("{}*2".format(number//2))
             continue
-        for k in range(3, number, 2):
-            if (number % k == 0):
-                factor = number//k
+        for i in range(3, number, 2):
+            if (number % i == 0):
+                factor = number//i
                 for j in range(3, factor, 2):
-                    if (factor % j == 0 or k % j == 0):
+                    if (factor % j == 0 or i % j == 0):
                         break
-                print("{}*{}".format(factor, k))
+                print("{}*{}".format(factor, i))
                 break

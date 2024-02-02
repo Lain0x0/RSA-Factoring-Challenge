@@ -1,34 +1,42 @@
 #!/usr/bin/bash
-calculate_product_of_primes() {
-	local product=1
 
-		if [ $# -eq 3 ]; then
-			product=$3
-		else
-			local primes=("${@:2}")
-				for prime in "${primes[@]}"; do
-					product=$(echo "$prime * $product" | bc)
+check_fctr() {
+	if [ $# -ne 3 ]; then
+		args=("$@")
+			count=0
+			num2=1
+
+			for a in "${args[@]}"; do
+				if [ $count -gt 1 ]; then
+					num2=$(echo "$a*$num2" | bc)
+						fi
+						count=$((count + 1))
 						done
+				else
+					num2=$3
 						fi
 
-						local larger_prime=$2
-						local formatted_num=$(echo "$1" | tr ':' '=')
+						num1=$2
+						num=$(echo "$1" | tr ':' '=')
 
-						if ((product > larger_prime)); then
-							local temp=$larger_prime
-								larger_prime=$product
-								product=$temp
+						result=$(echo "if($num2 > $num1) 1 else 0" | bc)
+						if ((result == 1)); then
+
+							temp=$num1
+								num1=$num2
+								num2=$temp
 								fi
 
-								echo "$formatted_num$larger_prime*$product"
+								echo "$num$num1*$num2"
 }
 
 if [ $# -ne 1 ]; then
-echo 'Usage: rsa_factors <file>'
+echo 'Usage: <file>'
 exit 1
+else
+while read -r line; do
+result=$(factor "$line")
+check_factor $result
+done < "$1"
 fi
-
-rsa_number=$(cat "$1")
-factors_result=$(factor "$rsa_number")
-calculate_product_of_primes $factors_result
 

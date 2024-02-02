@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 calculate_product_of_factors() {
 	if [ $# -ne 3 ]; then
 		args=("$@")

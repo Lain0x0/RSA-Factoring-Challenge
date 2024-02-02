@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+calculate_product_of_primes() {
+	local product=1
+
+		if [ $# -eq 3 ]; then
+			product=$3
+		else
+			local primes=("${@:2}")
+				for prime in "${primes[@]}"; do
+					product=$(echo "$prime * $product" | bc)
+						done
+						fi
+
+						local larger_prime=$2
+						local formatted_num=$(echo "$1" | tr ':' '=')
+
+						if ((product > larger_prime)); then
+							local temp=$larger_prime
+								larger_prime=$product
+								product=$temp
+								fi
+
+								echo "$formatted_num$larger_prime*$product"
+}
+
+if [ $# -ne 1 ]; then
+echo 'Usage: rsa_factors <file>'
+exit 1
+fi
+
+rsa_number=$(cat "$1")
+factors_result=$(factor "$rsa_number")
+calculate_product_of_primes $factors_result
+

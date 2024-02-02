@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+calculate_product_of_factors() {
+	if [ $# -ne 3 ]; then
+		args=("$@")
+			product=1
+			for a in "${args[@]:2}"; do
+				product=$(echo "$a * $product" | bc)
+					done
+	else
+		product=$3
+			fi
+
+			num1=$2
+			num=$(echo "$1" | tr ':' '=')
+
+			if [ $(echo "$product > $num1" | bc) -eq 1 ]; then
+				temp=$num1
+					num1=$product
+					product=$temp
+					fi
+
+					echo "$num$num1*$product"
+}
+
+if [ $# -ne 1 ]; then
+echo 'Usage: rsa_factors <file>'
+exit 1
+else
+rsa_number=$(cat "$1")
+factors_result=$(factor "$rsa_number")
+calculate_product_of_factors $factors_result
+fi
+
